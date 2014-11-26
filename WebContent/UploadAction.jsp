@@ -16,8 +16,7 @@
 <%@ include file="navigation.jspfragment" %>
 
 <form method="POST" enctype="multipart/form-data" action="<%= response.encodeURL("controllerservlet?action=" + Constants.ACTION_UPLOAD_FILE) %>"> 
-  File to upload: <input type="file" name="upfile"><br/>
-  Notes about the file: <input type="text" name="note"><br/>
+  File to upload: <input type="file" name="Datei"><br/>
   <br/>
   <input type="submit" value="Press"> to upload the file!
 </form>

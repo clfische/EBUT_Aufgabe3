@@ -5,6 +5,8 @@ public class Constants
 	// XML schemata files
 	public static final String XML_SCHEMA_BMECAT = "bmecat_new_catalog_1_2_simple_eps_V0.96.xsd";
 	public static final String XML_SCHEMA_OPENTRANS = "openTRANS_1_0.xsd";
+	
+	public static final String XSD_VALIDATION_FILEPATH = "C:\\Users\\Clemens\\workspace\\WholesalerWebDemo\\files\\bmecat_new_catalog_1_2_simple_without_NS.xsd";
 
 	public static final String ACTION_UPLOAD_FILE = "UploadAction";
 	public static final String ACTION_SHOW_ORDER_CUSTOMER_REQUEST_XML = "showOrderCustomerRequestXml";
