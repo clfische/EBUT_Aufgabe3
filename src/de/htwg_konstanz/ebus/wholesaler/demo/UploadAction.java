@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
+
 
 public class UploadAction implements IAction {
 
@@ -18,7 +20,7 @@ public class UploadAction implements IAction {
 
 	@Override
 	public boolean accepts(String actionName) {
-		return actionName.equalsIgnoreCase(Constants.ACTION_IMPORT_BMECAT);
+		return actionName.equalsIgnoreCase(Constants.ACTION_UPLOAD_FILE);
 	}
 	
 }
