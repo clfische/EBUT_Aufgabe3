@@ -9,6 +9,7 @@ public class Constants
 	public static final String XSD_VALIDATION_FILEPATH = "C:\\Users\\Clemens\\workspace\\WholesalerWebDemo\\files\\bmecat_new_catalog_1_2_simple_without_NS.xsd";
 
 	public static final String ACTION_UPLOAD_FILE = "UploadAction";
+	public static final String ACTION_EXPORT_FILE = "ExportAction";
 	public static final String ACTION_SHOW_ORDER_CUSTOMER_REQUEST_XML = "showOrderCustomerRequestXml";
 	public static final String ACTION_SHOW_ORDER_CUSTOMER_RESPONSE_XML = "showOrderCustomerResponseXml";
 	public static final String ACTION_SHOW_ORDER_PURCHASE_REQUEST_XML = "showOrderPurchaseRequestXml";
