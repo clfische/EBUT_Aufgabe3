@@ -1,5 +1,6 @@
 package de.htwg_konstanz.ebus.wholesaler.main;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,7 +10,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOCountry;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOPurchasePrice;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.CountryBOA;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 
 
 
@@ -102,6 +107,33 @@ public class Export {
             }
         }
         return article;
+    }
+	
+	private Element createPrices(Document bmeCatdoc, BOProduct product, BOCountry c,
+            BOPurchasePrice pp) {
+
+        Element article_price = bmeCatdoc.createElement("ARTICLE_PRICE");
+
+        article_price.setAttribute("price_type", "net_list");
+        Element price_amount = bmeCatdoc.createElement("PRICE_AMOUNT");
+        price_amount.setTextContent(String.valueOf(pp.getAmount()));
+        article_price.appendChild(price_amount);
+
+        Element price_currency = bmeCatdoc.createElement("PRICE_CURRENCY");
+        price_currency.setTextContent(c.getCurrency().getCode());
+        article_price.appendChild(price_currency);
+
+        Element tax = bmeCatdoc.createElement("TAX");
+
+        BigDecimal big = pp.getTaxrate();
+        tax.setTextContent(big + "");
+        article_price.appendChild(tax);
+
+        Element territory = bmeCatdoc.createElement("TERRITORY");
+        territory.setTextContent(c.getIsocode());
+        article_price.appendChild(territory);
+
+        return article_price;
     }
 	
 	
