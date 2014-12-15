@@ -35,15 +35,25 @@
 	</form>
 	<br>
 	<br>
+	
+	
+	<form method="post" name="import" action="<%= response.encodeURL("controllerservlet?action=ExportAction") %>">&nbsp;&nbsp;
+ 		<input type="search" name="search">
+ 		<input type="submit" name="Submit" value="Search"/>&nbsp;&nbsp;
+ 	</form>
+ 	
+ 	<!-- 
 	<form
 		action=" <%=response.encodeURL("controllerservlet?action=" + Constants.ACTION_EXPORT_FILE)%>"
 		method="post">
 		<p>
 			<input type="submit" value="start" name="search"> search and
-			export: <input name="searchString" type="text" size="12" maxlength="256">
+			export: <input name="search" type="text" size="12" maxlength="256">
 		</p>
 
 	</form>
-
+ -->
+ 
+ 
 </body>
 </html>
