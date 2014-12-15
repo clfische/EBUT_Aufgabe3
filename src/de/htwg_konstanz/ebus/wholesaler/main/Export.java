@@ -169,7 +169,7 @@ public class Export {
 		
 		
 	
-		StreamResult result = new StreamResult(new File("/Applications/XAMPP/xamppfiles/htdocs/"+filename));
+		StreamResult result = new StreamResult(new File("C:\\xampp\\htdocs\\"+filename));
 		
 		try {
 			System.out.println("vor transform result");
@@ -179,7 +179,7 @@ public class Export {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//transfromForWeb(document, filename);
+		transfromForWeb(document, filename);
 		//new DropFiles(filename).start();
 		return filename;
 		
@@ -189,10 +189,10 @@ public class Export {
 	private void transfromForWeb(Document document, String filename) {
 		try {
 			TransformerFactory factory = TransformerFactory.newInstance();
-			Transformer transformer = factory.newTransformer(new StreamSource("C:\\Temp\\BMECatToWeb.xslt"));
-			FileOutputStream fos = new FileOutputStream("/Applications/XAMPP/xamppfiles/htdocs/"+filename+".html");
+			Transformer transformer = factory.newTransformer(new StreamSource("C:\\xampp\\htdocs\\BMECatToWeb.xsl"));
+			FileOutputStream fos = new FileOutputStream("C:\\xampp\\htdocs\\"+filename+".html");
 			transformer.transform(
-					new StreamSource("/Applications/XAMPP/xamppfiles/htdocs/"+filename),
+					new StreamSource("C:\\xampp\\htdocs\\"+filename),
 					new StreamResult(fos)
 					);
 			fos.flush();
@@ -218,7 +218,7 @@ public class Export {
 		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI); 
 		URL schemaURL;
 		try {
-			schemaURL = new File("/Applications/XAMPP/xamppfiles/htdocs/bmecat_new_catalog_1_2_simple_without_NS.xsd").toURI().toURL();
+			schemaURL = new File("C:\\xampp\\htdocs\\bmecat_new_catalog_1_2_simple_without_NS.xsd").toURI().toURL();
 			Schema schema = sf.newSchema(schemaURL); 
 			Validator validator = schema.newValidator();
 			DOMSource source = new DOMSource(xmlDOM);
