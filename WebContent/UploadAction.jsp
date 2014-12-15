@@ -20,5 +20,7 @@
   <br/>
   <input type="submit" value="Press"> to upload the file!
 </form>
+
+<%@ include file="error.jsp"%>
 </body>
 </html>

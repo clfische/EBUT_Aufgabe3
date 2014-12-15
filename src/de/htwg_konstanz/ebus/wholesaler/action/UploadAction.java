@@ -1,10 +1,9 @@
 package de.htwg_konstanz.ebus.wholesaler.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -21,9 +22,11 @@ import javax.xml.validation.Validator;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import de.htwg_konstanz.ebus.wholesaler.demo.IAction;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
@@ -35,7 +38,7 @@ public class UploadAction implements IAction {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response, ArrayList<String> errorList) {
 		// TODO Auto-generated method stub
-
+		System.out.println("uploadactionbefore");
 		InputStream in = null;
 
 		if (ServletFileUpload.isMultipartContent(request)) {
@@ -55,7 +58,9 @@ public class UploadAction implements IAction {
 					if (!item.isFormField()) {
 						String fileName = item.getName();
 						if (fileName.length() == 0) {
-							throw new Exception(); // Keine Datei gefunden
+							errorList.add("Keine Datei ausgew‰hlt");
+                            return "UploadAction.jsp"; 
+							//throw new NoFileChosenException(); // Keine Datei gefunden
 							// TODO Exception anpassen
 						}
 
@@ -67,9 +72,9 @@ public class UploadAction implements IAction {
 						String contentType = item.getContentType();
 
 						in = item.getInputStream();
-						InputStreamReader reader = new InputStreamReader(in);
-						String value = item.getString();
-						System.out.println(value);
+						//InputStreamReader reader = new InputStreamReader(in);
+						//String value = item.getString();
+						//System.out.println(value);
 						
 						File schemaPath = new File(
 								Constants.XSD_VALIDATION_FILEPATH);
@@ -92,7 +97,7 @@ public class UploadAction implements IAction {
 						// TODO: Fehlerausgabe hinzuf√ºgen
 						if (!contentType.equals("text/xml")
 								|| !extension.equals("xml")) {
-							errorList.add("W√§hle eine XML-Datei aus");
+							errorList.add("W‰hle eine XML-Datei aus");
 							return "UploadAction.jsp";
 						}
 
@@ -104,8 +109,8 @@ public class UploadAction implements IAction {
 						try {
 							validator.validate(new DOMSource(document));
 						} catch (Exception e) {
-							errorList.add("Fehler DOMImport");
-							System.out.println("FehlerDOMIMPORT");
+							errorList.add("Dokument ist nicht valide!");
+							System.out.println("Dokument ist nicht valide!");
 						}
 						System.out.println("UploadAction 93");
 						// TODO Fehlerausgabe noch erg√§nzen
@@ -113,14 +118,37 @@ public class UploadAction implements IAction {
 							new DOMImport(document);
 							System.out.println("Import erfolgreich");
 						} catch (Exception e) {
-							errorList.add("Fehler DOMImport");
+							//errorList.add("Import wurde nicht erfolgreich beendet!");
 						}
+//					 } catch (FactoryConfigurationError e) {
+//                         errorList.add("couldnt convert");
+//                     
+//                     } catch (Exception e) {
+//                         errorList
+//                                 .add("error occured, some Elements couldnt be found in database");
+//                     }
 					}
 
 				}
-			} catch (Exception e) {
-				errorList.add("Fehler FileFactory");
-			}
+			} catch (ParserConfigurationException e) {
+				errorList.add("Fehler wohlgeformt");
+			
+		} catch (Exception e) {
+			errorList.add("Fehler FileFactory");
+		}
+			
+//			} catch (FileUploadException ex) {
+//                errorList.add("File Upload Failed due to " + ex);
+//            } catch (IOException ex) {
+//                // validate
+//                errorList.add("ValidationError " + ex);
+//            } catch (ParserConfigurationException ex) {
+//                // from DocumentBuilder
+//                errorList.add("DocumentBuilder Error: " + ex);
+//            } catch (SAXException ex) {
+//                // from validate
+//                errorList.add("ValidationError " + ex);
+//            } 
 		}
 
 		return "UploadAction.jsp";
